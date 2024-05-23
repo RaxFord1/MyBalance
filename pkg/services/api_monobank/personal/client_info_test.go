@@ -2,7 +2,7 @@ package personal_test
 
 import (
 	"MyBalance/internal/context"
-	"MyBalance/internal/services/api_monobank/personal"
+	"MyBalance/pkg/services/api_monobank/personal"
 	"log"
 	"testing"
 )

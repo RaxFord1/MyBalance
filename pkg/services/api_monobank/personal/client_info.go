@@ -3,6 +3,7 @@ package personal
 import (
 	"MyBalance/internal/context"
 	"MyBalance/internal/http/requesto"
+	"MyBalance/internal/http/secret"
 	"net/http"
 )
 
@@ -36,7 +37,9 @@ func ClientInfo(ctx context.Context, secretToken string) (*ClientInfoStruct, err
 		Headers: map[string]string{
 			"X-Token": secretToken,
 		},
-		DisableLog: false,
+		MaskedHeaders: map[string]string{
+			"X-Token": secret.ApplyMask(secretToken),
+		},
 	}
 	responseXml := &ClientInfoStruct{}
 	response := requesto.JsonResponse(responseXml)
