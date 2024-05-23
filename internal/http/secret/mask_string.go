@@ -3,11 +3,16 @@ package secret
 import "strings"
 
 func MaskString(input string, start int, end int, mask string) string {
-	if len(input) <= start+end {
+	if end >= len(input) || start > len(input) {
 		return "****"
 	}
+	if start > end {
+		tmp := start
+		start = end
+		end = tmp
+	}
 
-	return input[:start] + strings.Repeat(mask, len(input)-start-end) + input[len(input)-end:]
+	return input[:start] + strings.Repeat(mask, end-start) + input[end:]
 }
 
 func ApplyMask(input string) string {
