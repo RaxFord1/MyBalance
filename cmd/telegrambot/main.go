@@ -2,7 +2,8 @@ package main
 
 import (
 	"MyBalance/internal/context"
-	"MyBalance/pkg/Mono"
+	"MyBalance/pkg/core"
+	"MyBalance/pkg/mono_balance"
 	tele "gopkg.in/telebot.v3"
 	"log"
 	"os"
@@ -15,17 +16,26 @@ var (
 	ctx     context.Context
 )
 
-func Init() {
+func Init() error {
 	context.Init(context.Config{
 		Version: Version,
 		Tag:     Tag,
 	})
 
-	ctx = context.Named("init")
+	ctx = context.Named("Init")
+
+	if err := core.Init(ctx); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func main() {
-	Init()
+	err := Init()
+	if err != nil {
+		panic(err)
+	}
 
 	pref := tele.Settings{
 		Token:  os.Getenv("TOKEN"),
@@ -43,7 +53,7 @@ func main() {
 	})
 
 	b.Handle("/balance", func(c tele.Context) error {
-		balance, err := Mono.GetBalance(ctx)
+		balance, err := mono_balance.GetBalance(ctx)
 		if err != nil {
 			return c.Send(err.Error())
 		}

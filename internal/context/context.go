@@ -57,3 +57,29 @@ func (c *Context) Set(key string, value interface{}) {
 		c.dataMap[key] = value
 	}
 }
+
+func (c *Context) Get(key string) (interface{}, bool) {
+	if c.dataMtx != nil {
+		c.dataMtx.RLock()
+		defer c.dataMtx.RUnlock()
+		value, exists := c.dataMap[key]
+		return value, exists
+	}
+	return nil, false
+}
+
+func (c *Context) GetString(key string) (string, bool) {
+	if c.dataMtx != nil {
+		c.dataMtx.RLock()
+		defer c.dataMtx.RUnlock()
+		value, exists := c.dataMap[key]
+		if exists {
+			str, ok := value.(string)
+			if !ok {
+				return "", false
+			}
+			return str, exists
+		}
+	}
+	return "", false
+}

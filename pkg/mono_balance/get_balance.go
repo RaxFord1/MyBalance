@@ -1,4 +1,4 @@
-package Mono
+package mono_balance
 
 import (
 	"MyBalance/internal/context"
@@ -23,6 +23,10 @@ func findAccount(info *personal.ClientInfoStruct) personal.Account {
 }
 
 func GetBalance(ctx context.Context) (string, error) {
+	if err := LimitCheck(ctx, "mobo-api-balance"); err != nil {
+		return "", err
+	}
+
 	info, err := personal.ClientInfo(ctx, os.Getenv("mono_api"))
 	if err != nil {
 		return "", err

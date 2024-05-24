@@ -1,4 +1,4 @@
-package Mono
+package mono_balance
 
 import "testing"
 
