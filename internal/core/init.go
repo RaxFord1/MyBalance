@@ -3,8 +3,9 @@ package core
 import (
 	"MyBalance/internal/config"
 	"MyBalance/internal/context"
+	"MyBalance/internal/core/db"
 	"MyBalance/internal/telegram"
-	"MyBalance/pkg/mono_balance"
+	"MyBalance/pkg/mono"
 )
 
 func Init(ctx context.Context) error {
@@ -13,7 +14,11 @@ func Init(ctx context.Context) error {
 		return err
 	}
 
-	if err := mono_balance.Init(ctx); err != nil {
+	if err := db.Init(ctx); err != nil {
+		return err
+	}
+
+	if err := mono.Init(ctx); err != nil {
 		return err
 	}
 

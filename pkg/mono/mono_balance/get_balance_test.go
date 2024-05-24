@@ -3,8 +3,11 @@ package mono_balance_test
 import (
 	"MyBalance/internal/context"
 	"MyBalance/internal/core"
-	"MyBalance/pkg/mono_balance"
+	"MyBalance/internal/projkeys"
+	"MyBalance/pkg/mono/mono_balance"
+	"fmt"
 	"testing"
+	"time"
 )
 
 func TestGetBalance(t *testing.T) {
@@ -14,6 +17,8 @@ func TestGetBalance(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+
+	ctx.SetString(projkeys.ClientID, "clientId")
 
 	got, err := mono_balance.GetBalance(ctx)
 	if err != nil {
@@ -42,3 +47,7 @@ func TestGetBalance(t *testing.T) {
 //
 //	t.Log(got)
 //}
+
+func Test_formatCardInfo(t *testing.T) {
+	fmt.Println(fmt.Sprintf("%s", time.Now().Format("2006-01-02 15:04")))
+}

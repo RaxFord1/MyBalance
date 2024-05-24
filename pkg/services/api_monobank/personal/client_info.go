@@ -4,6 +4,7 @@ import (
 	"MyBalance/internal/context"
 	"MyBalance/internal/http/requesto"
 	"MyBalance/internal/utils/secret"
+	"log"
 	"net/http"
 )
 
@@ -30,6 +31,13 @@ type ClientInfoStruct struct {
 }
 
 func ClientInfo(ctx context.Context, secretToken string) (*ClientInfoStruct, error) {
+	if val, ok := ctx.Get("use_cache"); ok {
+		if val == "true" {
+			log.Println("using cache")
+			return getCache(), nil
+		}
+	}
+
 	request := &requesto.Request{
 		Name:   "monoAPI-client-info",
 		Url:    "https://api.monobank.ua/personal/client-info",
@@ -41,13 +49,13 @@ func ClientInfo(ctx context.Context, secretToken string) (*ClientInfoStruct, err
 			"X-Token": secret.ApplyMask(secretToken),
 		},
 	}
-	responseXml := &ClientInfoStruct{}
-	response := requesto.JsonResponse(responseXml)
+	result := &ClientInfoStruct{}
+	response := requesto.JsonResponse(result)
 
 	err := requesto.MakeRequest(ctx, request, response)
 	if err != nil {
 		return nil, err
 	}
 
-	return responseXml, nil
+	return result, nil
 }

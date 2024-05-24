@@ -1,10 +1,6 @@
-package mono_balance
+package utils
 
-import (
-	"fmt"
-	"testing"
-	"time"
-)
+import "testing"
 
 func Test_formatBalance(t *testing.T) {
 	type args struct {
@@ -15,7 +11,6 @@ func Test_formatBalance(t *testing.T) {
 		args args
 		want string
 	}{
-		// TODO: Add test cases.
 		{
 			name: "Standard balance",
 			args: args{balance: 123456},
@@ -54,13 +49,9 @@ func Test_formatBalance(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := formatBalance(tt.args.balance); got != tt.want {
-				t.Errorf("formatBalance() = %v, want %v", got, tt.want)
+			if got := FormatBalance(tt.args.balance); got != tt.want {
+				t.Errorf("FormatBalance() = %v, want %v", got, tt.want)
 			}
 		})
 	}
-}
-
-func Test_formatCardInfo(t *testing.T) {
-	fmt.Println(fmt.Sprintf("%s", time.Now().Format("2006-01-02 15:04")))
 }

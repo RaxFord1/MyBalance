@@ -11,6 +11,7 @@ const (
 	ClientID = "ClientID"
 
 	MonoApiKey = "mono_api_key"
+	MonoApiUrl = "mono_api_url"
 
 	TelegramBotToken           = "telegram.bot_token"
 	TelegramLongPollingTimeout = "telegram.poller_timeout"

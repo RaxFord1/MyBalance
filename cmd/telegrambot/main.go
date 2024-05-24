@@ -41,11 +41,18 @@ func main() {
 		return
 	}
 
-	b.HandleDefault("/ping", func(c tele.Context) error {
-		return c.Send("Ping!")
+	b.HandleDefault("/start", func(c tele.Context) error {
+		return c.Send("Привет! Чтобы узнать баланс, напиши /balance. потом можешь написать /statement, чтобы узнать историю транзакций за текущий день. \n" +
+			"В конце дня тебе будет приходить текущий баланс и история транзакций.")
 	})
 
 	b.Handle("/balance", functions.Balance)
+
+	b.Handle("/statement", functions.Statement)
+
+	b.HandleDefault("/ping", func(c tele.Context) error {
+		return c.Send("Ping!")
+	})
 
 	log.Println("Bot started")
 
