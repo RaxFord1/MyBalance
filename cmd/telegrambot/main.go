@@ -2,12 +2,11 @@ package main
 
 import (
 	"MyBalance/internal/context"
-	"MyBalance/pkg/core"
-	"MyBalance/pkg/mono_balance"
+	"MyBalance/internal/core"
+	"MyBalance/internal/telegram"
+	"MyBalance/internal/telegram/functions"
 	tele "gopkg.in/telebot.v3"
 	"log"
-	"os"
-	"time"
 )
 
 var (
@@ -37,28 +36,16 @@ func main() {
 		panic(err)
 	}
 
-	pref := tele.Settings{
-		Token:  os.Getenv("TOKEN"),
-		Poller: &tele.LongPoller{Timeout: 10 * time.Second},
-	}
-
-	b, err := tele.NewBot(pref)
+	b, err := telegram.NewBot(ctx)
 	if err != nil {
-		log.Fatal(err)
 		return
 	}
 
-	b.Handle("/hello", func(c tele.Context) error {
-		return c.Send("Hello!")
+	b.HandleDefault("/ping", func(c tele.Context) error {
+		return c.Send("Ping!")
 	})
 
-	b.Handle("/balance", func(c tele.Context) error {
-		balance, err := mono_balance.GetBalance(ctx)
-		if err != nil {
-			return c.Send(err.Error())
-		}
-		return c.Send(balance)
-	})
+	b.Handle("/balance", functions.Balance)
 
 	log.Println("Bot started")
 

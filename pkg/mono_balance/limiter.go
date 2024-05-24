@@ -21,6 +21,8 @@ func LimitCheck(ctx context.Context, key string) error {
 		if err := limiterClient.Allow(keyClientLimit); err != nil {
 			return err
 		}
+	} else {
+		return requesto.InternalError.NewWithMsg(ctx, "clientId not found")
 	}
 
 	return nil

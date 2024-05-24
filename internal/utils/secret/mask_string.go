@@ -2,7 +2,9 @@ package secret
 
 import "strings"
 
-func MaskString(input string, start int, end int, mask string) string {
+const mask = "*"
+
+func maskString(input string, start int, end int, mask string) string {
 	if end >= len(input) || start > len(input) {
 		return "****"
 	}
@@ -18,9 +20,11 @@ func MaskString(input string, start int, end int, mask string) string {
 func ApplyMask(input string) string {
 	length := len(input)
 	if length > 8 {
-		return MaskString(input, 4, length-4, "*")
+		return maskString(input, 4, length-4, mask)
 	} else if length > 4 {
-		return MaskString(input, 0, length-2, "*")
+		return maskString(input, 0, length-2, mask)
+	} else if length > 2 {
+		return maskString(input, 1, length-1, mask)
 	}
-	return "*"
+	return strings.Repeat(mask, len(input))
 }

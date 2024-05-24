@@ -25,17 +25,17 @@ func TestApplyMask(t *testing.T) {
 		{
 			name: "Exactly 4 characters",
 			args: args{input: "1234"},
-			want: "****",
+			want: "1**4",
 		},
 		{
 			name: "Fewer than 4 characters",
 			args: args{input: "123"},
-			want: "*",
+			want: "1*3",
 		},
 		{
 			name: "Empty string",
 			args: args{input: ""},
-			want: "*",
+			want: "",
 		},
 	}
 	for _, tt := range tests {

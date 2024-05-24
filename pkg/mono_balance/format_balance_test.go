@@ -1,6 +1,10 @@
 package mono_balance
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+	"time"
+)
 
 func Test_formatBalance(t *testing.T) {
 	type args struct {
@@ -55,4 +59,8 @@ func Test_formatBalance(t *testing.T) {
 			}
 		})
 	}
+}
+
+func Test_formatCardInfo(t *testing.T) {
+	fmt.Println(fmt.Sprintf("%s", time.Now().Format("2006-01-02 15:04")))
 }

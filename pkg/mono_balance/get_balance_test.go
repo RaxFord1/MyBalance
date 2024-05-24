@@ -2,14 +2,14 @@ package mono_balance_test
 
 import (
 	"MyBalance/internal/context"
-	"MyBalance/pkg/core"
+	"MyBalance/internal/core"
 	"MyBalance/pkg/mono_balance"
 	"testing"
 )
 
 func TestGetBalance(t *testing.T) {
 	ctx := context.Named("test-GetBalance")
-	ctx.SetString("mono_api", "fill_with_your_api_key_here")
+
 	err := core.Init(ctx)
 	if err != nil {
 		t.Fatal(err)

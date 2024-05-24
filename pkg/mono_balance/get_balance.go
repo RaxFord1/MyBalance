@@ -2,8 +2,8 @@ package mono_balance
 
 import (
 	"MyBalance/internal/context"
+	"MyBalance/internal/projkeys"
 	"MyBalance/pkg/services/api_monobank/personal"
-	"os"
 )
 
 type Balance struct {
@@ -19,15 +19,19 @@ func findAccount(info *personal.ClientInfoStruct) personal.Account {
 	}
 
 	return info.Accounts[0]
-
 }
 
 func GetBalance(ctx context.Context) (string, error) {
-	if err := LimitCheck(ctx, "mobo-api-balance"); err != nil {
+	if err := LimitCheck(ctx, "mono-api-balance"); err != nil {
 		return "", err
 	}
 
-	info, err := personal.ClientInfo(ctx, os.Getenv("mono_api"))
+	apiKey, err := ctx.GetString(projkeys.MonoApiKey)
+	if err != nil {
+		return "", err
+	}
+
+	info, err := personal.ClientInfo(ctx, apiKey)
 	if err != nil {
 		return "", err
 	}

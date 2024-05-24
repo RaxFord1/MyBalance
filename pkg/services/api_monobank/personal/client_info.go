@@ -3,7 +3,7 @@ package personal
 import (
 	"MyBalance/internal/context"
 	"MyBalance/internal/http/requesto"
-	"MyBalance/internal/http/secret"
+	"MyBalance/internal/utils/secret"
 	"net/http"
 )
 

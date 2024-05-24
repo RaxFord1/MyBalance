@@ -1,10 +1,11 @@
 package mono_balance
 
 import (
-	"MyBalance/internal/http/secret"
+	"MyBalance/internal/utils/secret"
 	"MyBalance/pkg/services/api_monobank/personal"
 	"fmt"
 	"strconv"
+	"time"
 )
 
 func formatBalance(balance int) string {
@@ -27,7 +28,8 @@ func formatBalance(balance int) string {
 }
 
 func formatCardInfo(account personal.Account) string {
-	return fmt.Sprintf("%s\nОсталось на карте: %s\nБаланс: %s\nКредитный лимит: %s\n ",
+	return fmt.Sprintf("%s\n%s\nОсталось на карте: %s\nБаланс: %s\nКредитный лимит: %s\n ",
+		time.Now().Format("2006-01-02 15:04"),
 		secret.ApplyMask(account.MaskedPan[0]),
 		formatBalance(account.Balance-account.CreditLimit),
 		formatBalance(account.Balance),
