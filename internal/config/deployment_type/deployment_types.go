@@ -1,4 +1,4 @@
-package config
+package deployment_type
 
 import (
 	"MyBalance/internal/context"
@@ -9,6 +9,7 @@ import (
 type DeploymentType string
 
 var (
+	None       DeploymentType = ""
 	Production DeploymentType = "production"
 	Staging    DeploymentType = "staging"
 	Local      DeploymentType = "local"

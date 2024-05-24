@@ -15,4 +15,6 @@ const (
 
 	TelegramBotToken           = "telegram.bot_token"
 	TelegramLongPollingTimeout = "telegram.poller_timeout"
+
+	DeploymentType = "DEPLOYMENT_TYPE"
 )

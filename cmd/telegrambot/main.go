@@ -1,6 +1,7 @@
 package main
 
 import (
+	"MyBalance/internal/config"
 	"MyBalance/internal/context"
 	"MyBalance/internal/core"
 	"MyBalance/internal/telegram"
@@ -23,6 +24,10 @@ func Init() error {
 
 	ctx = context.Named("Init")
 
+	// different config types for different deployment types
+	config.SetConfigType(ctx, config.TypeOfConfigFromFile)
+	config.SetDeploymentInfoSource(ctx, config.DeploymentInfoFromEnv)
+
 	if err := core.Init(ctx); err != nil {
 		return err
 	}
@@ -38,11 +43,12 @@ func main() {
 
 	b, err := telegram.NewBot(ctx)
 	if err != nil {
-		return
+		panic(err)
 	}
 
 	b.HandleDefault("/start", func(c tele.Context) error {
-		return c.Send("Привет! Чтобы узнать баланс, напиши /balance. потом можешь написать /statement, чтобы узнать историю транзакций за текущий день. \n" +
+		return c.Send("Привет! Чтобы узнать баланс, напиши /balance. " +
+			"Потом можешь написать /statement, чтобы узнать историю транзакций за текущий день. \n" +
 			"В конце дня тебе будет приходить текущий баланс и история транзакций.")
 	})
 
