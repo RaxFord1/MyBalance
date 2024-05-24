@@ -3,6 +3,8 @@ package mono_balance
 import (
 	"MyBalance/internal/context"
 	"MyBalance/internal/limiter"
+	"golang.org/x/time/rate"
+	"time"
 )
 
 var (
@@ -11,9 +13,9 @@ var (
 )
 
 func Init(ctx context.Context) error {
-	limiterAll = limiter.NewEventLimiter(1, 5)
+	limiterAll = limiter.NewEventLimiter(rate.Every(time.Minute), 5)
 
-	limiterClient = limiter.NewEventLimiter(1, 1)
+	limiterClient = limiter.NewEventLimiter(rate.Every(time.Minute), 1)
 
 	return nil
 }

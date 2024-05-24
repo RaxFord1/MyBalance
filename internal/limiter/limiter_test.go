@@ -1,6 +1,7 @@
 package limiter
 
 import (
+	"golang.org/x/time/rate"
 	"log"
 	"sync"
 	"testing"
@@ -33,7 +34,7 @@ func TestEventLimiter_GetLimiter(t *testing.T) {
 }
 
 func TestEventLimiter_AllowAction(t *testing.T) {
-	userLimiter := NewEventLimiter(1, 1)
+	userLimiter := NewEventLimiter(rate.Every(time.Minute), 1)
 	userID := "testUser"
 
 	// Allow the first action.
@@ -52,7 +53,7 @@ func TestEventLimiter_AllowAction(t *testing.T) {
 	}
 
 	// Wait for a second to allow the rate limiter to replenish its tokens.
-	time.Sleep(time.Second)
+	time.Sleep(time.Second * 60)
 
 	// The action should be allowed again after the rate limiter has replenished.
 	if err := userLimiter.Allow(userID); err != nil {
@@ -61,7 +62,7 @@ func TestEventLimiter_AllowAction(t *testing.T) {
 }
 
 func TestEventLimiter_MultipleUsers(t *testing.T) {
-	userLimiter := NewEventLimiter(1, 1)
+	userLimiter := NewEventLimiter(rate.Every(time.Second), 1)
 	userID1 := "user1"
 	userID2 := "user2"
 
@@ -97,7 +98,7 @@ func TestEventLimiter_Concurrency(t *testing.T) {
 	// numGoroutines := 10
 	// numRequests := 11
 
-	userLimiter := NewEventLimiter(1, 1)
+	userLimiter := NewEventLimiter(rate.Every(time.Second), 1)
 	userID := "testUser"
 	var wg sync.WaitGroup
 	numGoroutines := 10
@@ -141,7 +142,7 @@ func TestEventLimiter_Concurrency(t *testing.T) {
 func TestEventLimiter_ConcurrencyMultipleUsers(t *testing.T) {
 	// for numRequestsPerGoroutine = 11 expecting 2 allowed, bc 11 - 1 (y) + 9(no) + 1 (y)
 	// for 1 > numRequestsPerGoroutine < 10 expecting 1 allowed, bc 1 sec would be timeout and other requests would be blocked
-	userLimiter := NewEventLimiter(1, 1) // 1 request per second with a burst of 1
+	userLimiter := NewEventLimiter(rate.Every(time.Second), 1) // 1 request per second with a burst of 1
 	var wg sync.WaitGroup
 	numUsers := 5
 	numGoroutinesPerUser := 2
