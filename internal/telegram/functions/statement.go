@@ -7,12 +7,14 @@ import (
 )
 
 func Statement(ctx context.Context, c tele.Context) error {
-	balance, err := mono_statement.GetStatement(ctx)
+	balance, err := mono_statement.GetForTodayStatementString(ctx)
 	if err != nil {
 		return c.Send(err.Error())
 	}
+
 	if balance == "" {
 		return c.Send("Нет истории транзакций за сегодня.")
 	}
+
 	return c.Send(balance)
 }

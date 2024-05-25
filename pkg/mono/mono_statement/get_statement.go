@@ -26,7 +26,7 @@ func formatStatement(history []monobank.StatementResponse) string {
 	return sb.String()
 }
 
-func GetStatement(ctx context.Context) (string, error) {
+func GetForTodayStatementString(ctx context.Context) (string, error) {
 	if err := LimitCheck(ctx, "mono-api-balance"); err != nil {
 		return "", err
 	}
@@ -41,17 +41,17 @@ func GetStatement(ctx context.Context) (string, error) {
 		return "", err
 	}
 
+	url, err := ctx.GetString(projkeys.MonoApiUrl)
+	if err != nil {
+		return "", err
+	}
+
 	card, err := db.GetCard(ctx, clientId)
 	if err != nil {
 		return "", err
 	}
 
 	start, end := GetTimeStartAndNowUnix()
-
-	url, err := ctx.GetString(projkeys.MonoApiUrl)
-	if err != nil {
-		return "", err
-	}
 
 	mbClient := monobank.NewClient(url, apiKey)
 

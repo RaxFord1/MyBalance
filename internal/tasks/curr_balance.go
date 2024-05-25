@@ -65,7 +65,7 @@ func GetAndSendCurrentBalanceDaySummary(ctx context.Context, b *telegram.Bot) er
 
 	time.Sleep(1 * time.Second)
 
-	state, err := mono_statement.GetStatement(ctx)
+	state, err := mono_statement.GetForTodayStatementString(ctx)
 	if err != nil {
 		return err
 	}
