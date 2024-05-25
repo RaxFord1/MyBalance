@@ -11,5 +11,8 @@ func Statement(ctx context.Context, c tele.Context) error {
 	if err != nil {
 		return c.Send(err.Error())
 	}
+	if balance == "" {
+		return c.Send("Нет истории транзакций за сегодня.")
+	}
 	return c.Send(balance)
 }
