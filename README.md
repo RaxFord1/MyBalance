@@ -21,6 +21,14 @@
 - tele (as telegram-bot api)
 - golang
 
+<h2 id="started">🍕 Prerequisites </h2>
+
+In order to start using this project, you need to have API keys for telegram bot and monobank API.
+
+To get telegram_token use this bot: https://t.me/BotFather
+
+To get monobank api key use https://api.monobank.ua/index.html
+
 
 <h2 id="started">🚀 Getting started</h2>
 
