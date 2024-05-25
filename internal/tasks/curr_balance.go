@@ -51,7 +51,7 @@ func GetAndSendCurrentBalanceDaySummary(ctx context.Context, b *telegram.Bot) er
 		return requesto.InternalError.NewWithMsg(ctx, "bot is nil")
 	}
 	users := db.GetUsers(ctx)
-	now := time.Now()
+
 	if len(users) == 0 {
 		return nil
 	}
@@ -71,7 +71,7 @@ func GetAndSendCurrentBalanceDaySummary(ctx context.Context, b *telegram.Bot) er
 	}
 
 	for _, v := range users {
-		summary := utils.GenerateDaySummaryString(now, balance, state)
+		summary := utils.GenerateDaySummaryString(balance, state)
 		if _, err = b.Send(ctx, v, summary); err != nil {
 			return err
 		}
