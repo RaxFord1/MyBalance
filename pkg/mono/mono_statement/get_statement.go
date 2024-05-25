@@ -1,16 +1,16 @@
 package mono_statement
 
 import (
+	"MyBalance/internal/clients/monobank"
 	"MyBalance/internal/core/balance/utils"
 	"MyBalance/internal/core/db"
 	"MyBalance/internal/http/context"
 	"MyBalance/internal/projkeys"
-	"MyBalance/pkg/services/api_monobank/personal"
 	"strings"
 	"time"
 )
 
-func formatStatement(history []personal.StatementResponse) string {
+func formatStatement(history []monobank.StatementResponse) string {
 	sb := strings.Builder{}
 
 	for i := range history {
@@ -48,7 +48,14 @@ func GetStatement(ctx context.Context) (string, error) {
 
 	start, end := GetTimeStartAndNowUnix()
 
-	info, err := personal.Statement(ctx, apiKey, card, start, end)
+	url, err := ctx.GetString(projkeys.MonoApiUrl)
+	if err != nil {
+		return "", err
+	}
+
+	mbClient := monobank.NewClient(url, apiKey)
+
+	info, err := mbClient.Statement(ctx, card, start, end)
 	if err != nil {
 		return "", err
 	}

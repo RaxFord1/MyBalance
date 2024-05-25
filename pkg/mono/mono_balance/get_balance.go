@@ -1,12 +1,12 @@
 package mono_balance
 
 import (
+	"MyBalance/internal/clients/monobank"
 	"MyBalance/internal/core/balance/utils"
 	"MyBalance/internal/core/db"
 	"MyBalance/internal/http/context"
 	"MyBalance/internal/projkeys"
 	"MyBalance/internal/utils/secret"
-	"MyBalance/pkg/services/api_monobank/personal"
 	"fmt"
 	"time"
 )
@@ -16,7 +16,7 @@ type Balance struct {
 	Balance int
 }
 
-func formatCardInfo(account personal.Account) string {
+func formatCardInfo(account monobank.Account) string {
 	return fmt.Sprintf("%s\n%s\nОсталось на карте: %s\nБаланс: %s\nКредитный лимит: %s\n ",
 		time.Now().Format("2006-01-02 15:04"),
 		secret.ApplyMask(account.MaskedPan[0]),
@@ -41,7 +41,14 @@ func GetBalance(ctx context.Context) (string, error) {
 		return "", err
 	}
 
-	info, err := personal.ClientInfo(ctx, apiKey)
+	url, err := ctx.GetString(projkeys.MonoApiUrl)
+	if err != nil {
+		return "", err
+	}
+
+	mbClient := monobank.NewClient(url, apiKey)
+
+	info, err := mbClient.ClientInfo(ctx)
 	if err != nil {
 		return "", err
 	}

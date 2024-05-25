@@ -1,10 +1,10 @@
-package personal_test
+package monobank_test
 
 import (
+	"MyBalance/internal/clients/monobank"
 	"MyBalance/internal/core"
 	"MyBalance/internal/http/context"
 	"MyBalance/internal/projkeys"
-	"MyBalance/pkg/services/api_monobank/personal"
 	"testing"
 )
 
@@ -26,7 +26,14 @@ func TestStatement(t *testing.T) {
 		to      int64 = 1716562892
 	)
 
-	got, err := personal.Statement(ctx, apiKey, account, from, to)
+	url, err := ctx.GetString(projkeys.MonoApiUrl)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	mbClient := monobank.NewClient(url, apiKey)
+
+	got, err := mbClient.Statement(ctx, account, from, to)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -1,9 +1,8 @@
-package personal
+package monobank
 
 import (
 	"MyBalance/internal/http/context"
 	"MyBalance/internal/http/requesto"
-	"MyBalance/internal/projkeys"
 	"MyBalance/internal/utils/secret"
 	"fmt"
 	"net/http"
@@ -25,29 +24,24 @@ type StatementResponse struct {
 	ReceiptId       string `json:"receiptId"`
 }
 
-func Statement(ctx context.Context, secretToken, account string, from, to int64) ([]StatementResponse, error) {
-	url, err := ctx.GetString(projkeys.MonoApiUrl)
-	if err != nil {
-		return nil, err
-	}
-
-	finalUrl := fmt.Sprintf("%v/personal/statement/%v/%v/%v", url, account, from, to)
+func (c *Client) Statement(ctx context.Context, account string, from, to int64) ([]StatementResponse, error) {
+	finalUrl := fmt.Sprintf("%v/personal/statement/%v/%v/%v", c.baseURL, account, from, to)
 
 	request := &requesto.Request{
 		Name:   "monoAPI-client-info",
 		Url:    finalUrl,
 		Method: http.MethodGet,
 		Headers: map[string]string{
-			"X-Token": secretToken,
+			"X-Token": c.apiKey,
 		},
 		MaskedHeaders: map[string]string{
-			"X-Token": secret.ApplyMask(secretToken),
+			"X-Token": secret.ApplyMask(c.apiKey),
 		},
 	}
 	result := &[]StatementResponse{}
 	response := requesto.JsonResponse(result)
 
-	if err = requesto.MakeRequest(ctx, request, response); err != nil {
+	if err := requesto.MakeRequest(ctx, request, response); err != nil {
 		return nil, err
 	}
 

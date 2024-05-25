@@ -1,9 +1,10 @@
-package personal
+package monobank
 
 import (
 	"MyBalance/internal/http/context"
 	"MyBalance/internal/http/requesto"
 	"MyBalance/internal/utils/secret"
+	"fmt"
 	"log"
 	"net/http"
 )
@@ -30,7 +31,7 @@ type ClientInfoStruct struct {
 	Accounts    Accounts `json:"accounts"`
 }
 
-func ClientInfo(ctx context.Context, secretToken string) (*ClientInfoStruct, error) {
+func (c *Client) ClientInfo(ctx context.Context) (*ClientInfoStruct, error) {
 	if val, ok := ctx.Get("use_cache"); ok {
 		if val == "true" {
 			log.Println("using cache")
@@ -38,22 +39,23 @@ func ClientInfo(ctx context.Context, secretToken string) (*ClientInfoStruct, err
 		}
 	}
 
+	finalUrl := fmt.Sprintf("%v/personal/client-info", c.baseURL)
+
 	request := &requesto.Request{
 		Name:   "monoAPI-client-info",
-		Url:    "https://api.monobank.ua/personal/client-info",
+		Url:    finalUrl,
 		Method: http.MethodGet,
 		Headers: map[string]string{
-			"X-Token": secretToken,
+			"X-Token": c.apiKey,
 		},
 		MaskedHeaders: map[string]string{
-			"X-Token": secret.ApplyMask(secretToken),
+			"X-Token": secret.ApplyMask(c.apiKey),
 		},
 	}
 	result := &ClientInfoStruct{}
 	response := requesto.JsonResponse(result)
 
-	err := requesto.MakeRequest(ctx, request, response)
-	if err != nil {
+	if err := requesto.MakeRequest(ctx, request, response); err != nil {
 		return nil, err
 	}
 
