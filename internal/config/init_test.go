@@ -2,7 +2,7 @@ package config_test
 
 import (
 	"MyBalance/internal/config"
-	"MyBalance/internal/context"
+	"MyBalance/internal/http/context"
 	"MyBalance/internal/projkeys"
 	"MyBalance/internal/utils/secret"
 	"testing"

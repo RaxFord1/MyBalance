@@ -2,9 +2,10 @@ package main
 
 import (
 	"MyBalance/internal/config"
-	"MyBalance/internal/context"
 	"MyBalance/internal/core"
+	"MyBalance/internal/http/context"
 	"MyBalance/internal/http/simple_server"
+	"MyBalance/internal/tasks"
 	"MyBalance/internal/telegram"
 	"MyBalance/internal/telegram/functions"
 	tele "gopkg.in/telebot.v3"
@@ -33,6 +34,10 @@ func Init() error {
 		return err
 	}
 
+	if err := tasks.Init(ctx); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -57,6 +62,8 @@ func main() {
 		b.Handle("/balance", functions.Balance)
 
 		b.Handle("/statement", functions.Statement)
+
+		b.Handle("/summary", functions.Summary)
 
 		b.HandleDefault("/ping", func(c tele.Context) error {
 			return c.Send("Ping!")

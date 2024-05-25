@@ -1,7 +1,7 @@
 package telegram
 
 import (
-	"MyBalance/internal/context"
+	"MyBalance/internal/http/context"
 )
 
 //var B *Bot

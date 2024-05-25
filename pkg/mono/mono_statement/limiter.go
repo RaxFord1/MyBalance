@@ -1,7 +1,7 @@
 package mono_statement
 
 import (
-	"MyBalance/internal/context"
+	"MyBalance/internal/http/context"
 	"MyBalance/internal/http/requesto"
 	"MyBalance/internal/projkeys"
 )

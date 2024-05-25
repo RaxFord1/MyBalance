@@ -4,7 +4,7 @@ import (
 	"MyBalance/internal/config/deployment_type"
 	"MyBalance/internal/config/interface_core"
 	"MyBalance/internal/config/utils"
-	"MyBalance/internal/context"
+	"MyBalance/internal/http/context"
 	"MyBalance/internal/http/requesto"
 	"MyBalance/internal/projkeys"
 	"fmt"

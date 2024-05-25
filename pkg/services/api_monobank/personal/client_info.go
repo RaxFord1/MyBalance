@@ -1,7 +1,7 @@
 package personal
 
 import (
-	"MyBalance/internal/context"
+	"MyBalance/internal/http/context"
 	"MyBalance/internal/http/requesto"
 	"MyBalance/internal/utils/secret"
 	"log"

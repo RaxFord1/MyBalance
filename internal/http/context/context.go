@@ -47,6 +47,18 @@ func Named(name string) Context {
 	return ctx
 }
 
+func NewFromPrev(oldCtx Context, name string) Context {
+	mtx := sync.RWMutex{}
+	ctx := Context{Context: context.Background(), dataMtx: &mtx, dataMap: map[string]interface{}{}}
+	ctx.Set(projkeys.Name, name)
+
+	for _, key := range oldCtx.GetKeys() {
+		val, _ := oldCtx.Get(key)
+		ctx.Set(key, val)
+	}
+	return ctx
+}
+
 func (c *Context) SetString(key, value string) {
 	c.Set(key, value)
 }

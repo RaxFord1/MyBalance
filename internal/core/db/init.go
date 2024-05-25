@@ -1,9 +1,9 @@
 package db
 
 import (
-	"MyBalance/internal/context"
 	"MyBalance/internal/core/db/db_in_memory"
 	"MyBalance/internal/core/db/interface_mono_db"
+	"MyBalance/internal/http/context"
 )
 
 var db interface_mono_db.DBMono

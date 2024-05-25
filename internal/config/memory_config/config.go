@@ -3,7 +3,7 @@ package memory_config
 import (
 	"MyBalance/internal/config/deployment_type"
 	"MyBalance/internal/config/interface_core"
-	"MyBalance/internal/context"
+	"MyBalance/internal/http/context"
 )
 
 var _ interface_core.Cfg = (*MemoryConfig)(nil)

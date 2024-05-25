@@ -2,7 +2,7 @@ package config
 
 import (
 	"MyBalance/internal/config/deployment_type"
-	"MyBalance/internal/context"
+	"MyBalance/internal/http/context"
 	"MyBalance/internal/http/requesto"
 	"fmt"
 )

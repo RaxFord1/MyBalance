@@ -1,7 +1,7 @@
 package telegram
 
 import (
-	"MyBalance/internal/context"
+	"MyBalance/internal/http/context"
 	"MyBalance/internal/projkeys"
 	tele "gopkg.in/telebot.v3"
 	"time"
@@ -11,6 +11,7 @@ type IBot interface {
 	Handle(endpoint interface{}, h HandleFunc, m ...tele.MiddlewareFunc)
 	HandleDefault(endpoint interface{}, h tele.HandlerFunc, m ...tele.MiddlewareFunc)
 	Start()
+	Send(ctx context.Context, to string, message interface{}, opts ...interface{}) (*tele.Message, error)
 }
 type HandleFunc func(ctx context.Context, ctx2 tele.Context) error
 
@@ -19,6 +20,11 @@ var _ IBot = (*Bot)(nil)
 type Bot struct {
 	ctx context.Context
 	bot *tele.Bot
+}
+
+func (b *Bot) Send(ctx context.Context, to string, message interface{}, opts ...interface{}) (*tele.Message, error) {
+	r := Recipient{chatId: to}
+	return b.bot.Send(r, message, opts...)
 }
 
 func (b *Bot) Start() {
@@ -47,4 +53,11 @@ func NewBot(ctx context.Context) (*Bot, error) {
 		ctx: ctx,
 		bot: b,
 	}, nil
+}
+
+func BotFromTeleBot(ctx context.Context, bot *tele.Bot) *Bot {
+	return &Bot{
+		ctx: ctx,
+		bot: bot,
+	}
 }

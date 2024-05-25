@@ -1,8 +1,8 @@
 package personal_test
 
 import (
-	"MyBalance/internal/context"
 	"MyBalance/internal/core"
+	"MyBalance/internal/http/context"
 	"MyBalance/internal/projkeys"
 	"MyBalance/pkg/services/api_monobank/personal"
 	"testing"

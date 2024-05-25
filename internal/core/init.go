@@ -2,8 +2,8 @@ package core
 
 import (
 	"MyBalance/internal/config"
-	"MyBalance/internal/context"
 	"MyBalance/internal/core/db"
+	"MyBalance/internal/http/context"
 	"MyBalance/internal/telegram"
 	"MyBalance/pkg/mono"
 )

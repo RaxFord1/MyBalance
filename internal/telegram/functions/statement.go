@@ -1,7 +1,7 @@
 package functions
 
 import (
-	"MyBalance/internal/context"
+	"MyBalance/internal/http/context"
 	"MyBalance/pkg/mono/mono_statement"
 	tele "gopkg.in/telebot.v3"
 )

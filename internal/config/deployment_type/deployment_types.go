@@ -1,7 +1,7 @@
 package deployment_type
 
 import (
-	"MyBalance/internal/context"
+	"MyBalance/internal/http/context"
 	"MyBalance/internal/http/requesto"
 	"fmt"
 )

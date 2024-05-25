@@ -5,7 +5,7 @@ import (
 	"MyBalance/internal/config/file_config"
 	"MyBalance/internal/config/interface_core"
 	"MyBalance/internal/config/memory_config"
-	"MyBalance/internal/context"
+	"MyBalance/internal/http/context"
 )
 
 var config interface_core.Cfg

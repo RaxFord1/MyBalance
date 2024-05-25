@@ -1,11 +1,11 @@
 package mono_balance
 
 import (
-	"MyBalance/internal/context"
+	"MyBalance/internal/core/balance/utils"
 	"MyBalance/internal/core/db"
+	"MyBalance/internal/http/context"
 	"MyBalance/internal/projkeys"
 	"MyBalance/internal/utils/secret"
-	"MyBalance/pkg/mono/utils"
 	"MyBalance/pkg/services/api_monobank/personal"
 	"fmt"
 	"time"
@@ -14,16 +14,6 @@ import (
 type Balance struct {
 	Credit  int
 	Balance int
-}
-
-func findAccount(info *personal.ClientInfoStruct) personal.Account {
-	for _, account := range info.Accounts {
-		if account.CurrencyCode == 980 && account.Type == "black" {
-			return account
-		}
-	}
-
-	return info.Accounts[0]
 }
 
 func formatCardInfo(account personal.Account) string {
@@ -56,7 +46,7 @@ func GetBalance(ctx context.Context) (string, error) {
 		return "", err
 	}
 
-	account := findAccount(info)
+	account := utils.FindAccount(info)
 
 	db.SetCard(ctx, clientId, account.Id)
 

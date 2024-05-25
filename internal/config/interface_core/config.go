@@ -2,7 +2,7 @@ package interface_core
 
 import (
 	"MyBalance/internal/config/deployment_type"
-	"MyBalance/internal/context"
+	"MyBalance/internal/http/context"
 )
 
 type Cfg interface {
