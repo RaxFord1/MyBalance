@@ -25,7 +25,7 @@ func Init() error {
 	ctx = context.Named("Init")
 
 	// different config types for different deployment types
-	config.SetConfigType(ctx, config.TypeOfConfigFromFile)
+	config.SetConfigType(ctx, config.TypeOfConfigFromMemory)
 	config.SetDeploymentInfoSource(ctx, config.DeploymentInfoFromEnv)
 
 	if err := core.Init(ctx); err != nil {
