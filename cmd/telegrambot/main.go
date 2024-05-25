@@ -42,8 +42,8 @@ func Init() error {
 }
 
 func main() {
-	err := Init()
-	if err != nil {
+
+	if err := Init(); err != nil {
 		panic(err)
 	}
 
