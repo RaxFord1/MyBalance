@@ -15,7 +15,7 @@ type databaseMonoInMemory struct {
 	db sync.Map
 }
 
-func (r *databaseMonoInMemory) GetUsers(c context.Context) []string {
+func (r *databaseMonoInMemory) GetUsers(ctx context.Context) []string {
 	keys := []string{}
 
 	// Function to collect keys
@@ -44,8 +44,9 @@ func (r *databaseMonoInMemory) GetCard(ctx context.Context, user string) (string
 	return "", requesto.UserNotFound.New(ctx)
 }
 
-func (r *databaseMonoInMemory) SetCard(ctx context.Context, user string, card string) {
+func (r *databaseMonoInMemory) SetCard(ctx context.Context, user string, card string) error {
 	r.db.Store(user, card)
+	return nil
 }
 
 func NewDatabaseMonoInMemory() interface_mono_db.DBMono {

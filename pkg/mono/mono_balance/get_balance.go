@@ -5,6 +5,7 @@ import (
 	"MyBalance/internal/core/balance/utils"
 	"MyBalance/internal/core/db"
 	"MyBalance/internal/http/context"
+	"MyBalance/internal/http/logger"
 	"MyBalance/internal/projkeys"
 	"MyBalance/internal/utils/secret"
 	"fmt"
@@ -55,7 +56,10 @@ func GetBalance(ctx context.Context) (string, error) {
 
 	account := utils.FindAccount(info)
 
-	db.SetCard(ctx, clientId, account.Id)
+	if err = db.SetCard(ctx, clientId, account.Id); err != nil {
+		logger.PrintError(ctx, "error setting to database", err)
+		return "", err
+	}
 
 	return formatCardInfo(account), nil
 }

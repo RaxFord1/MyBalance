@@ -17,4 +17,8 @@ const (
 	TelegramLongPollingTimeout = "telegram.poller_timeout"
 
 	DeploymentType = "DEPLOYMENT_TYPE"
+
+	RedisCloudUrl = "REDISCLOUD_URL"
+
+	DatabaseType = "database.type"
 )
