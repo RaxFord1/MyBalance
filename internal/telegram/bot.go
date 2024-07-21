@@ -2,6 +2,7 @@ package telegram
 
 import (
 	"MyBalance/internal/http/context"
+	"MyBalance/internal/http/requesto"
 	"MyBalance/internal/projkeys"
 	tele "gopkg.in/telebot.v3"
 	"time"
@@ -34,7 +35,7 @@ func (b *Bot) Start() {
 func NewBot(ctx context.Context) (*Bot, error) {
 	token, err := ctx.GetString(projkeys.TelegramBotToken)
 	if err != nil {
-		return nil, err
+		return nil, requesto.InternalError.NewWithMsg(ctx, err.Error())
 	}
 
 	pollingTimeout := ctx.GetIntOptional(projkeys.TelegramLongPollingTimeout, 10)

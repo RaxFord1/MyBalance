@@ -13,12 +13,14 @@ const (
 	MonoApiKey = "mono_api_key"
 	MonoApiUrl = "mono_api_url"
 
-	TelegramBotToken           = "telegram.bot_token"
-	TelegramLongPollingTimeout = "telegram.poller_timeout"
+	TelegramBotToken           = "telegram_bot_token"
+	TelegramLongPollingTimeout = "telegram_poller_timeout"
 
 	DeploymentType = "DEPLOYMENT_TYPE"
 
 	RedisCloudUrl = "REDISCLOUD_URL"
 
-	DatabaseType = "database.type"
+	DatabaseType = "database_type"
+
+	DefaultUsers = "default_users"
 )

@@ -26,5 +26,9 @@ func Init(ctx context.Context) error {
 		return err
 	}
 
+	if err := InitDefaultUsers(ctx); err != nil {
+		return err
+	}
+
 	return nil
 }

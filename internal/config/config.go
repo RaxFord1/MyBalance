@@ -12,8 +12,8 @@ type T int
 
 const (
 	TypeOfConfigNotDefined T = iota
-	TypeOfConfigFromMemory
-	TypeOfConfigFromFile
+	TypeOfConfigFromMemory   // get config from environment in memory
+	TypeOfConfigFromFile     // get config from file
 )
 
 func (r T) Check(ctx context.Context) error {
